@@ -1,0 +1,32 @@
+=>ORACLE DATABASE:
+library(RJDBC)
+connectString = paste0("jdbc:oracle:thin:@(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP) (Host = ","host.detail.all.com", ") (Port = 1521)) (CONNECT_DATA = (SERVICE_NAME=service.name.detail.com)))")
+jdbcDriver <- JDBC(driverClass="oracle.jdbc.OracleDriver", classPath="C:/lib/ojdbc7.jar", "'")
+jdbcConnection <- dbConnect(jdbcDriver, connectString, "username", "password")
+qr<-paste0("select *  from table")
+data<-dbGetQuery(jdbcConnection,qr)
+
+=>DB2 DATABASE:
+library(RODBC)
+#Global:
+Sys.setenv("ODBCINI" = paste(Sys.getenv("R_PACKRAT_PROJECT_DIR"),"odbc.ini",sep="/"))
+Sys.setenv("DB2CLIINIPATH" = Sys.getenv("R_PACKRAT_PROJECT_DIR"))
+conn<-odbcConnect("DBabc",believeNRows = FALSE)
+#Local:
+conn <- odbcConnect("DBabc_Conn",uid = 'username',pwd='password')
+qr<-paste0("select *  from table ")
+data<- sqlQuery(conn,qr)
+
+=>SQL SERVER DATABASE:
+#Local:
+conn<-dbConnect(odbc::odbc(),Driver="SQL Server",Server ="SQLserver.detail.all.com\\INST1",Database = "Prod_DB",Port ="1434",UID = "username",PWD = "password")
+#Global:
+conn<-dbConnect(odbc::odbc(),Driver="SQLServer",Server ="SQLserver.detail.all.com\\INST1",Database = "Prod_DB",Port ="1434",UID = "username",PWD = "password")
+qr<-paste0(" select *  from table  ")
+data<-dbGetQuery(conn,qr)
+
+=>SAP HANA DATABASE:
+Driver <- JDBC(driverClass="com.sap.db.jdbc.Driver",  classPath="C:/lib/ngdbc-2.4.56.jar")
+Connection <- dbConnect(Driver,"jdbc:sap://prod.tab.detail.com:30015","username","password")
+qr <- paste0("select *  from table ")
+data <- dbGetQuery(Connection, qr)

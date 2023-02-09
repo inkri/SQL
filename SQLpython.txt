@@ -1,0 +1,44 @@
+#Databricks: Spark-> ODBC Data source setting needs to be done
+import pyodbc
+conn = pyodbc.connect(DSN='Spark', autocommit=True)
+sql='''select * from table '''
+data = pd.read_sql(sql, conn)
+
+#SAP HANA:
+from hdbcli import dbapi
+connection = dbapi.connect('database.com', 30015,ENCRYPT=True, sslValidateCertificate=False)
+cursor_SAP = connection.cursor()
+#connection = dbapi.connect('database.com', 30015,username,pswd)
+#cursor_SAP = connection.cursor()
+query="""select * from table """
+cursor_SAP.execute(query)
+cols = [tups[0] for tups in cursor_SAP.description]
+cursor_SAP.execute(query)
+data = pd.DataFrame(cursor_SAP.fetchall(),columns=cols)
+
+#Oracle:
+import cx_Oracle
+import pasdas as pd
+conn= cx_Oracle.connect('username/password@database.com:1521/database.com')
+query = '''select * from table '''
+data = pd.read_sql(con = conn, sql = query)
+conn.close()
+
+#DB2: IBM
+from ibm_db import connect
+connection = connect('DATABASE=DBabc;''HOSTNAME=dbabc.detail.com;'
+                     'PORT=3700;'
+                     'PROTOCOL=TCPIP;'
+                     'UID=username;'
+                     'PWD=password;','','')
+
+hdbi = ibm_db_dbi.Connection(connection)
+query='''select * from table'''
+data = pd.read_sql_query(query,hdbi)
+
+#SQL Server:
+import pypyodbc
+conn = pypyodbc.connect('Driver={SQL Server};''Server=ServerDetails\INST1;' 'uid=username;pwd=password')
+data = pd.read_sql_query("select * from table",conn)
+conn.close()
+  
