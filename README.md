@@ -1,5 +1,9 @@
 # SQL
 
+Overview of SQL for Analytics
+SQL (Structured Query Language) is a powerful language used for managing and querying relational databases. In the context of analytics, SQL is essential for data extraction, transformation, and analysis. It allows analysts and data scientists to manipulate and query data effectively to derive insights and make data-driven decisions.
+
+
 ### **Notes on SQL for Analytics**
 
 #### **1. Basic SQL Queries**
